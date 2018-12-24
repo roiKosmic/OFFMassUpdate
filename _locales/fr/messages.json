@@ -1,0 +1,11 @@
+﻿{
+	"extName":{
+		"message":"OFF Mass Updater",
+		"description":"Extension name"
+	
+	},
+	"extDescription":{
+		"message":"Mettre à jours les informations des produits OFF en masse",
+		"description":"Extension description"
+	}
+}
