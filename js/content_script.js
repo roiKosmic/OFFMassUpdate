@@ -13,7 +13,7 @@ var form_template = "<div id='form'>Champ à modifier:"
 					+"<input name='tags' id='tags' value='' />"
 					+"<div class='massFormButton'>Update</div>"
 					+"</div>"
-					+"<div id='spinner'>Edition en masse en cours</div>";
+					+"<div id='spinner'>Edition en masse en cours : <div id='successCounter'>0</div> - <div id='failureCounter'>0</div></div>";
 
 var api_url = "/cgi/product_jqm2.pl?";
 
@@ -86,14 +86,34 @@ function sendMassUpdate(){
 	var lang = $("html").attr("lang");
 	$('.massUpdateCheckbox').each(function(){
 		if($(this).is(':checked')){
-			var url = api_url+"code="+$(this).attr("value")+"&lc="+lang+"&comment="+chrome.i18n.getMessage("extComment")+"&"+selectedField+"=";
+			var remote_url = api_url+"code="+$(this).attr("value")+"&lc="+lang+"&comment="+chrome.i18n.getMessage("extComment")+"&"+selectedField+"="+$('#tags').val();
 			console.log("Sending Get request  to "+url+"\n");
+			 $.ajax({
+				type: "GET",
+				url: remote_url,
+				async: false,
+				success: function (result) {
+					incrSuccessCounter();
+				},
+				error: function(){
+					incrFailureCounter();
+				
+				}
+			});
+			
 			$(this).prop('checked',false);
 		}
 	
 	
 	});
 
+}
+function incrFailureCounter(){
 
+}
+
+function incrSuccessCounter(){
+
+	
 
 }
