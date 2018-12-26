@@ -8,4 +8,10 @@
 		"message":"Mettre à jours les informations des produits OFF en masse",
 		"description":"Extension description"
 	}
+	
+	"extComment":{
+		"message":"MAJviaOFFMassUpdater",
+		"description":"Valeur ajouté à l'api lors des mises à jours"
+	
+	}
 }

@@ -19,7 +19,7 @@
 
 .massForms{
   background-color: blue;
-  opacity: .55;
+  opacity: .85;
   padding: 20px;
   color: rgba(255,255,255,.9);
   position: fixed;
@@ -28,4 +28,20 @@
   
   
 
+}
+
+.massFormButton{
+background-color: red;
+  border: none;
+  color: white;
+  padding: 2px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  color: white;
+  margin: 4px 2px;
+  width:25%;
+  cursor:pointer;
+  border-radius: 20px;
 }
