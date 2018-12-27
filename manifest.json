@@ -19,7 +19,9 @@
             "js": [
                     "/js/external/jquery.js",
 					"/js/external/jquery.tagsinput.js",
+					"/js/external/jquery-ui.min.js",
                     "/js/content_script.js"
+					
                 ]
         }
     ],

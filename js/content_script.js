@@ -2,34 +2,50 @@ var form_template = "<div id='form'>"
 					+"<input type='checkbox' id='selectAll'>&nbsp;Select All</input>"
 					+"<div>Champ à modifier:</div>" 
 				   +"<select id='champ'>"
-				   +"				<option value='add_packaging'>Conditionnement</option>"
-				    +"				<option value='add_brands'>Marques</option>"
-					+"				<option value='add_categories'>Catégories</option>"
-					+"				<option value='add_labels'>Label,certifications,récompenses</option>"
-					+"				<option value='add_origins'>Origines des ingrédients</option>"
-					+"				<option value='add_manufacturing_places'>Lieux de fabrication ou de transformation</option>"
-					+"				<option value='add_purchase_places'>Ville et pays d'achat</option>"
-					+"				<option value='add_stores'>Magasins</option>"
-					+"				<option value='add_countries'>Pays de vente</option>"
+				   +"				<option value='add_packaging' field='packaging'>Conditionnement</option>"
+				    +"				<option value='add_brands' field='brands'>Marques</option>"
+					+"				<option value='add_categories' field='categories'>Catégories</option>"
+					+"				<option value='add_labels' field='labels'>Label,certifications,récompenses</option>"
+					+"				<option value='add_origins' field='origins'>Origines des ingrédients</option>"
+					+"				<option value='add_manufacturing_places' field='manufacturing_places'>Lieux de fabrication ou de transformation</option>"
+					+"				<option value='add_purchase_places' field='purchase_places'>Ville et pays d'achat</option>"
+					+"				<option value='add_stores' field='stores'>Magasins</option>"
+					+"				<option value='add_countries' field='countries'>Pays de vente</option>"
 				    +"</select>"
 					+"<input name='tags' id='tags' value='' />"
 					+"<div class='massFormButton'>Update</div>"
 					+"</div>"
 					+"<div id='spinner'>"
-					+"Edition en masse en cours : "
+					+"Edition de <span id='pNumber'>0</span> produits en cours : "
 					+"     <div class='counter'>Succes:&nbsp;<div id='sNumber'>0</div></div>"
 					+"     <div class='counter'>Erreur:&nbsp;<div id='eNumber'>0</div></div>"
 					+"	   <div id='backButton'> < Retour </div>"
 					+"</div>";
 
 var api_url = "/cgi/product_jqm2.pl?";
-
+var api_autocomplete_url =  "cgi/suggest.pl?";
+var sField='';
+var lang='';
+var productToUpdate=0;
 $(document).ready(function(){
 if(isConnected()){
 	if($(".products").length){
+		lang = $("html").attr("lang")
 		addingCheckBox();
 		addingMassButton();
-		$('#tags').tagsInput();
+		$('#tags').tagsInput(
+		{
+		
+		
+		autocomplete_url: function(request, response) {
+          url = api_autocomplete_url+"lc="+lang+"&tagtype="+sField+"&string="+request.term;
+          $.get(url, function(data){
+              //data = JSON.parse(data);
+              response(data);
+          });
+		}
+		}
+		);
 		
 	}
 	
@@ -97,6 +113,14 @@ function addingMassButton(){
 		}
 	
 	});
+	
+	$('#champ').change(function(){
+			
+		sField = $('#champ').find(':selected').attr("field");
+	
+	
+		
+	});
 
 }
 
@@ -104,7 +128,9 @@ function sendMassUpdate(){
 
 	var mySelect = $('#champ');
     var selectedField = mySelect.find(':selected').val()
-	var lang = $("html").attr("lang");
+	
+	productToUpdate= $('.massUpdateCheckbox:checked').length;
+	
 	$('.massUpdateCheckbox').each(function(){
 		if($(this).is(':checked')){
 			var remote_url = api_url+"code="+$(this).attr("value")+"&lc="+lang+"&comment="+chrome.i18n.getMessage("extComment")+"&"+selectedField+"="+$('#tags').val();
@@ -112,13 +138,18 @@ function sendMassUpdate(){
 			 $.ajax({
 				type: "GET",
 				url: remote_url,
-				async: false,
+				
 				success: function (result) {
 					incrSuccessCounter();
+					productToUpdate--;
+					updateProductCounter();
+					if(productToUpdate <=0) $('#backButton').show();
 				},
 				error: function(){
 					incrFailureCounter();
-				
+					productToUpdate--;
+					updateProductCounter();
+					if(productToUpdate <=0) $('#backButton').show();
 				}
 			});
 			
@@ -128,7 +159,7 @@ function sendMassUpdate(){
 	
 	});
 	
-	$('#backButton').show();
+	
 
 }
 function incrFailureCounter(){
@@ -142,7 +173,12 @@ function incrSuccessCounter(){
 	
 }
 
+function updateProductCounter(){
+	$("#pNumber").html(productToUpdate);
+
+}
 function resetCounter(){
 	$("#eNumber").html("0");
 	$("#sNumber").html("0");
+	$("#pNumber").html("0");
 }
