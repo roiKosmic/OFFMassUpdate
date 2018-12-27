@@ -93,7 +93,9 @@ function addingMassButton(){
 	$("#backButton").click(function(){
 		$("#backButton").hide();
 		$("#spinner").hide();
+		$('#selectAll').prop("checked",false);
 		$("#form").show();
+		
 		resetCounter();
 	});
 	
