@@ -13,7 +13,12 @@ var form_template = "<div id='form'>Champ à modifier:"
 					+"<input name='tags' id='tags' value='' />"
 					+"<div class='massFormButton'>Update</div>"
 					+"</div>"
-					+"<div id='spinner'>Edition en masse en cours : <div id='successCounter'>0</div> - <div id='failureCounter'>0</div></div>";
+					+"<div id='spinner'>"
+					+"Edition en masse en cours : "
+					+"     <div class='counter'>Succes:&nbsp;<div id='sNumber'>0</div></div>"
+					+"     <div class='counter'>Erreur:&nbsp;<div id='eNumber'>0</div></div>"
+					+"	   <div id='backButton'> < Retour </div>"
+					+"</div>";
 
 var api_url = "/cgi/product_jqm2.pl?";
 
@@ -23,13 +28,6 @@ if(isConnected()){
 		addingCheckBox();
 		addingMassButton();
 		$('#tags').tagsInput();
-		
-		$.get("https://fr.openfoodfacts.net/produit/20/toast-nature-test-brand",function(data){
-			console.log("jquery ajax success");
-		})
-			.fail(function(){
-				console.log("ajax failed");
-			});
 		
 	}
 	
@@ -70,9 +68,18 @@ function addingMassButton(){
 		}
 	
 	});
+	
+	$("#backButton").click(function(){
+		$("#backButton").hide();
+		$("#spinner").hide();
+		$("#form").show();
+		resetCounter();
+	});
+	
 	$(".massFormButton").click(function(){
 		$("#spinner").show();
 		$("#form").hide();
+		$("#backButton").hide();
 		sendMassUpdate();
 	
 	});
@@ -87,7 +94,7 @@ function sendMassUpdate(){
 	$('.massUpdateCheckbox').each(function(){
 		if($(this).is(':checked')){
 			var remote_url = api_url+"code="+$(this).attr("value")+"&lc="+lang+"&comment="+chrome.i18n.getMessage("extComment")+"&"+selectedField+"="+$('#tags').val();
-			console.log("Sending Get request  to "+url+"\n");
+			console.log("Sending Get request  to "+remote_url+"\n");
 			 $.ajax({
 				type: "GET",
 				url: remote_url,
@@ -106,14 +113,22 @@ function sendMassUpdate(){
 	
 	
 	});
+	
+	$('#backButton').show();
 
 }
 function incrFailureCounter(){
-
+	var x = parseInt($("#eNumber").html()) +1;
+	$("#eNumber").html(x);
 }
 
 function incrSuccessCounter(){
-
+	var x = parseInt($("#sNumber").html()) +1; 
+	$("#sNumber").html(x);
 	
+}
 
+function resetCounter(){
+	$("#eNumber").html("0");
+	$("#sNumber").html("0");
 }
