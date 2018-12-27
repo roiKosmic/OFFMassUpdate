@@ -47,15 +47,16 @@ function addingCheckBox(){
 		var myAnchor= $(this).parent().find("a");
 		var myHref = myAnchor.attr("href");
 		
-		var myRe = /\/(\w+)\/(\d+)\/(\w+)/;
+		//var myRe = /\/(\w+)\/(\d+)\/(\w+)/;
+		var myRe = /\/(\w+)\/(\d+)([\/|\w]*)/
 		var result = myRe.exec(myHref);
 		$(this).attr('value',result[2]);
-		
+		console.log("Value :"+result[2]);
 	});
 }
 
 function addingMassButton(){
-	$("body").append("<div class='massUpdater'><div class='massButton'>M</div><div class='massForms'>"+form_template+"</div></div>");
+	$("body").append("<div class='massUpdater'><div class='massButton'>&nbsp;</div><div class='massForms'>"+form_template+"</div></div>");
 	$('.massForms').hide();
 	$('#spinner').hide();
 	$(".massButton").click(function(){
@@ -64,7 +65,7 @@ function addingMassButton(){
 			$(".massButton").css("background-color","blue");
 		}else{
 			$('.massForms').hide();
-			$(".massButton").css("background-color","red");
+			$(".massButton").css("background-color","white");
 		}
 	
 	});

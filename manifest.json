@@ -13,7 +13,7 @@
 
     "content_scripts": [
         {
-            "matches": ["https://fr.openfoodfacts.net/*"],
+            "matches": ["https://*.openfoodfacts.net/*"],
 			"css": ["/css/myStyle.css","/css/external/jquery.tagsinput.css"],
 			"run_at": "document_end",
             "js": [
