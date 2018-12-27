@@ -24,7 +24,7 @@ var form_template = "<div id='form'>"
 
 var api_url = "/cgi/product_jqm2.pl?";
 var api_autocomplete_url =  "cgi/suggest.pl?";
-var sField='';
+var sField='packaging';
 var lang='';
 var productToUpdate=0;
 $(document).ready(function(){
