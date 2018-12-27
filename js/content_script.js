@@ -1,4 +1,6 @@
-var form_template = "<div id='form'>Champ à modifier:" 
+var form_template = "<div id='form'>"
+					+"<input type='checkbox' id='selectAll'>&nbsp;Select All</input>"
+					+"<div>Champ à modifier:</div>" 
 				   +"<select id='champ'>"
 				   +"				<option value='add_packaging'>Conditionnement</option>"
 				    +"				<option value='add_brands'>Marques</option>"
@@ -53,6 +55,8 @@ function addingCheckBox(){
 		$(this).attr('value',result[2]);
 		console.log("Value :"+result[2]);
 	});
+	
+
 }
 
 function addingMassButton(){
@@ -82,6 +86,15 @@ function addingMassButton(){
 		$("#form").hide();
 		$("#backButton").hide();
 		sendMassUpdate();
+	
+	});
+	
+	$('#selectAll').change(function(){
+		if($(this).is(':checked')){
+			$('.massUpdateCheckbox').prop("checked",true);
+		}else{
+			$('.massUpdateCheckbox').prop("checked",false);
+		}
 	
 	});
 
