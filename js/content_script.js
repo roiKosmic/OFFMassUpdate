@@ -11,8 +11,10 @@ var form_template = "<div id='form'>"
 					+"				<option value='add_purchase_places' field='purchase_places'>Ville et pays d'achat</option>"
 					+"				<option value='add_stores' field='stores'>Magasins</option>"
 					+"				<option value='add_countries' field='countries'>Pays de vente</option>"
+					+"				<option value='quantity' field='quantity'>Quantité</option>"
 				    +"</select>"
-					+"<input name='tags' id='tags' value='' />"
+					+"<div id='tagsHidder'><input name='tags' id='tags' value='' /></div>"
+					+"<input name='quantity' id='quantity' type='text' value='' />"
 					+"<div class='massFormButton'>Update</div>"
 					+"</div>"
 					+"<div id='spinner'>"
@@ -85,6 +87,7 @@ function addingMassButton(){
 	$('.massForms').hide();
 	$('#spinner').hide();
 	
+	
 	initValue();
 	
 	$(".massButton").click(function(){
@@ -97,6 +100,9 @@ function addingMassButton(){
 			$('.massForms').hide();
 			$(".massButton").css("background-color","white");
 			clearAllField();
+			
+			$("#tagsHidder").show();
+			$("#quantity").hide();
 		}
 	
 	});
@@ -108,6 +114,11 @@ function addingMassButton(){
 		$("#form").show();
 		
 		resetCounter();
+	});
+	
+	$("#quantity").change(function(){
+		var q = $(this).val();
+		chrome.storage.local.set({"quantity":q});
 	});
 	
 	$(".massFormButton").click(function(){
@@ -134,9 +145,17 @@ function addingMassButton(){
 		sField = $('#champ').find(':selected').attr("field");
 		chrome.storage.local.set({"selectedField":sField});
 		console.log("Setting: "+sField);
+		if(sField==='quantity'){
+			$("#tagsHidder").hide();
+			$("#quantity").show();
+		}else{
+			$("#tagsHidder").show();
+			$("#quantity").hide();
+		
+		}
 	});
 
-
+	
 	
 }
 
@@ -149,12 +168,27 @@ function initValue(){
 			$("#champ > option[field='"+result.selectedField+"']").prop("selected",true);
 			console.log("getting:" + result.selectedField);
 			sField= result.selectedField;
+		if(sField==='quantity'){
+			$("#tagsHidder").hide();
+			$("#quantity").show();
+		}else{
+			$("#tagsHidder").show();
+			$("#quantity").hide();
+		
+		}
 		}
 	});
 	
 	chrome.storage.local.get(['tags'],function(result){
 		if(result.tags != null){
 			$('#tags').importTags(result.tags);
+		}
+	}
+	);
+	
+	chrome.storage.local.get(['quantity'],function(result){
+		if(result.quantity != null){
+			$('#quantity').val(result.quantity);
 		}
 	}
 	);
@@ -169,6 +203,9 @@ function initValue(){
 			$(".massButton").css("background-color","white");
 		}
 	});
+	
+	
+	
 }
 
 function sendMassUpdate(){
@@ -180,7 +217,13 @@ function sendMassUpdate(){
 	
 	$('.massUpdateCheckbox').each(function(){
 		if($(this).is(':checked')){
-			var remote_url = api_url+"code="+$(this).attr("value")+"&lc="+lang+"&comment="+encodeURIComponent(chrome.i18n.getMessage("extComment"))+"&"+selectedField+"="+encodeURIComponent($('#tags').val());
+			var remote_url = api_url+"code="+$(this).attr("value")+"&lc="+lang+"&comment="+encodeURIComponent(chrome.i18n.getMessage("extComment"))+"&"+selectedField+"=";
+			if(sField==='quantity'){
+				remote_url += encodeURIComponent($("#quantity").val());
+			}else{
+				remote_url += encodeURIComponent($('#tags').val());
+			}
+			
 			console.log("Sending Get request to "+remote_url+"\n");
 			 $.ajax({
 				type: "GET",
@@ -213,6 +256,7 @@ function sendMassUpdate(){
 function clearAllField(){
 	chrome.storage.local.clear();
 	$('#tags').importTags("");
+	$("#quantity").val("");
 	$("#champ > option[field='packaging']").prop("selected",true);
 	sField='packaging';
 	$('.massUpdateCheckbox').prop("checked",false);
