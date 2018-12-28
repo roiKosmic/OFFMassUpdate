@@ -180,7 +180,7 @@ function sendMassUpdate(){
 	
 	$('.massUpdateCheckbox').each(function(){
 		if($(this).is(':checked')){
-			var remote_url = api_url+"code="+$(this).attr("value")+"&lc="+lang+"&comment="+chrome.i18n.getMessage("extComment")+"&"+selectedField+"="+$('#tags').val();
+			var remote_url = api_url+"code="+$(this).attr("value")+"&lc="+lang+"&comment="+encodeURIComponent(chrome.i18n.getMessage("extComment"))+"&"+selectedField+"="+encodeURIComponent($('#tags').val());
 			console.log("Sending Get request to "+remote_url+"\n");
 			 $.ajax({
 				type: "GET",
