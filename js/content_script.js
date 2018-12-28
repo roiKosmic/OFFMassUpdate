@@ -23,11 +23,13 @@ var form_template = "<div id='form'>"
 					+"</div>";
 
 var api_url = "/cgi/product_jqm2.pl?";
-var api_autocomplete_url =  "cgi/suggest.pl?";
+var api_autocomplete_url =  "/cgi/suggest.pl?";
 var sField='packaging';
 var lang='';
 var productToUpdate=0;
+
 $(document).ready(function(){
+
 if(isConnected()){
 	if($(".products").length){
 		lang = $("html").attr("lang")
@@ -36,7 +38,10 @@ if(isConnected()){
 		$('#tags').tagsInput(
 		{
 		
-		
+		onChange: function(){
+			console.log("Tags updated");
+			chrome.storage.local.set({"tags":$('#tags').val()});
+		},
 		autocomplete_url: function(request, response) {
           url = api_autocomplete_url+"lc="+lang+"&tagtype="+sField+"&string="+request.term;
           $.get(url, function(data){
@@ -79,13 +84,19 @@ function addingMassButton(){
 	$("body").append("<div class='massUpdater'><div class='massButton'>&nbsp;</div><div class='massForms'>"+form_template+"</div></div>");
 	$('.massForms').hide();
 	$('#spinner').hide();
+	
+	initValue();
+	
 	$(".massButton").click(function(){
 		if($(".massForms").is(":hidden")){
 			$('.massForms').show();
 			$(".massButton").css("background-color","blue");
+			chrome.storage.local.set({"visible":true});
+			
 		}else{
 			$('.massForms').hide();
 			$(".massButton").css("background-color","white");
+			clearAllField();
 		}
 	
 	});
@@ -116,14 +127,48 @@ function addingMassButton(){
 	
 	});
 	
-	$('#champ').change(function(){
-			
+	
+	
+	
+	$('#champ').change(function(){	
 		sField = $('#champ').find(':selected').attr("field");
-	
-	
-		
+		chrome.storage.local.set({"selectedField":sField});
+		console.log("Setting: "+sField);
 	});
 
+
+	
+}
+
+
+
+
+function initValue(){
+	chrome.storage.local.get(['selectedField'],function(result){
+		if(result.selectedField != null){
+			$("#champ > option[field='"+result.selectedField+"']").prop("selected",true);
+			console.log("getting:" + result.selectedField);
+			sField= result.selectedField;
+		}
+	});
+	
+	chrome.storage.local.get(['tags'],function(result){
+		if(result.tags != null){
+			$('#tags').importTags(result.tags);
+		}
+	}
+	);
+	
+	chrome.storage.local.get(['visible'],function(result){
+		if(result.visible == true){
+			$('.massForms').show();
+			$(".massButton").css("background-color","blue");
+			
+		}else{
+			$('.massForms').hide();
+			$(".massButton").css("background-color","white");
+		}
+	});
 }
 
 function sendMassUpdate(){
@@ -161,6 +206,17 @@ function sendMassUpdate(){
 	
 	});
 	
+	
+
+}
+
+function clearAllField(){
+	chrome.storage.local.clear();
+	$('#tags').importTags("");
+	$("#champ > option[field='packaging']").prop("selected",true);
+	sField='packaging';
+	$('.massUpdateCheckbox').prop("checked",false);
+	$('#selectAll').prop("checked",false);
 	
 
 }
