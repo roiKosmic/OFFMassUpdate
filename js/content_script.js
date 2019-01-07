@@ -1,5 +1,5 @@
 var form_template = "<div id='form'>"
-					+"<input type='checkbox' id='selectAll'>&nbsp;Select All</input>"
+					+"<div class='upBar'><input type='checkbox' id='selectAll'>&nbsp;Select All</input><div class='copyButton'>Copier</div></div>"
 					+"<div>Champ à modifier:</div>" 
 				   +"<select id='champ'>"
 				   +"				<option value='add_packaging' field='packaging'>Conditionnement</option>"
@@ -129,6 +129,7 @@ function addingMassButton(){
 	
 	});
 	
+	
 	$('#selectAll').change(function(){
 		if($(this).is(':checked')){
 			$('.massUpdateCheckbox').prop("checked",true);
@@ -155,6 +156,24 @@ function addingMassButton(){
 		}
 	});
 
+	$(".copyButton").click(function(){
+		var codes ='';
+		$('.massUpdateCheckbox').each(function(){
+			if($(this).is(':checked')){
+				codes = codes + $(this).attr("value") + "\n";
+			}	
+		});
+		
+		navigator.clipboard.writeText(codes)
+		.then(() => {
+			console.log('Text copied to clipboard');
+		})
+		.catch(err => {
+			// This can happen if the user denies clipboard permissions:
+			console.error('Could not copy text: ', err);
+		});
+		
+	});
 	
 	
 }

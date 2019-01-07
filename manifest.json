@@ -9,7 +9,8 @@
 	"default_locale":"fr",
     "permissions": [
           "*://*.openfoodfacts.net/*",
-		  "storage"
+		  "storage",
+		  "clipboardWrite"
     ],
 
     "content_scripts": [
