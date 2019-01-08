@@ -9,13 +9,14 @@
 	"default_locale":"fr",
     "permissions": [
           "*://*.openfoodfacts.net/*",
+		   "*://*.openfoodfacts.org/*",
 		  "storage",
 		  "clipboardWrite"
     ],
 
     "content_scripts": [
         {
-            "matches": ["https://*.openfoodfacts.net/*"],
+            "matches": ["https://*.openfoodfacts.net/*","https://*.openfoodfacts.org/*"],
 			"css": ["/css/myStyle.css","/css/external/jquery.tagsinput.css"],
 			"run_at": "document_end",
             "js": [
