@@ -13,5 +13,97 @@
 		"message":"MAJ via OFF Mass Updater",		
 		"description":"Valeur ajoutée à l'api lors des mises à jours"
 
+	},
+	
+	"copyLabel":{
+		"message":"Copier",
+		"description": "Copy label"
+	},
+	
+	"fieldToUpdateLabel":{
+		"message":"Champ à modifier",
+		"description":"Field to update label"
+		
+	},
+	
+	"packagingLabel":{
+		"message":"Conditionnement",
+		"description":"Packaging label"
+	},
+
+	"brandsLabel":{
+		"message":"Marques",
+		"description":"Brands label"
+	},
+	
+	"categoriesLabel":{
+		"message":"Catégories",
+		"description":"categories label"
+	},
+	
+	"certificationsLabel":{
+		"message":"Label, certifications, récompenses",
+		"description": "certification label"
+	},
+	
+	"originsLabel":{
+		"message":"Origines des ingrédients",
+		"description": "origins label"
+	},
+	
+	"manufacturingLabel":{
+		"message":"Lieux de fabrication ou de transformation",
+		"description":"places label"
+	},
+	
+	"purchasingLabel":{
+		"message":"Ville et pays d'achat",
+		"description":"city label"
+	},
+	
+	"storesLabel":{
+		"message":"Magasins",
+		"description":"Stores label"
+	
+	},
+	
+	"countriesLabel":{
+		"message":"Pays de vente",
+		"description":"Countries label"
+	
+	},
+	
+	"quantityLabel":{
+		"message":"Quantité",
+		"description":"quantity label"
+	},
+	
+	"editLabel":{
+		"message":"Edition de ",
+		"description":"Edit label"
+	},
+	
+	"editNextLabel":{
+		"message":" produits en cours",
+		"description": "editNextLabel"
+		
+	},
+	
+	"successLabel":{
+		"message":"Succès",
+		"description": "success label"
+	
+	},
+	
+	"FailureLabel":{
+		"message":"Erreurs",
+		"description":"failure label"
+	
+	},
+	
+	"backLabel":{
+		"message":"Retour",
+		"description": "Back label"
 	}
+	
 }
