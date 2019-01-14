@@ -1,4 +1,4 @@
-{
+ï»¿{
 	"extName":{
 		"message":"OFF Mass Updater",
 		"description":"Extension name"
@@ -10,8 +10,8 @@
 	},
 	
 	"extComment":{
-		"message":"MAJ via OFF Mass Updater",		
-		"description":"Valeur ajoutée à l'api lors des mises à jours"
+		"message":"Updated via OFF Mass Updater",		
+		"description":"Sentence added by the API when updating"
 
 	},
 	
