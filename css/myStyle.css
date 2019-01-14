@@ -1,3 +1,17 @@
+.popup_div{
+    position:absolute;
+    left:100px;
+    top:100px;
+    background-color: blue;
+	opacity: .85;
+	padding: 20px;
+	color: rgba(255,255,255,.9);
+    width:340px;
+    min-height:150px;
+    
+    text-align:left;
+}
+
 .massButton {
  
   background-image: url("chrome-extension://__MSG_@@extension_id__/img/pen.png");
@@ -49,7 +63,13 @@ background-color: red;
   cursor:pointer;
   border-radius: 20px;
 }
-
+#ingredients{
+	width: 300px;
+	min-height: 130px;
+	text-align: justify;
+	resize:none;
+	vertical-align:text-top;
+}
 .copyButton{
   background-color: red;
   border: none;
@@ -131,4 +151,3 @@ background-color: red;
 }
 
 
-}

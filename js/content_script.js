@@ -15,7 +15,7 @@ var form_template = "<div id='form'>"
 				    +"</select>"
 					+"<div id='tagsHidder'><input name='tags' id='tags' value='' /></div>"
 					+"<input name='quantity' id='quantity' type='text' value='' />"
-					+"<div class='massFormButton'>Update</div>"
+					+"<div class='massFormButton update'>Update</div>"
 					+"</div>"
 					+"<div id='spinner'>"
 					+chrome.i18n.getMessage('editLabel')+"<span id='pNumber'>0</span>"+chrome.i18n.getMessage('editNextLabel')
@@ -23,6 +23,12 @@ var form_template = "<div id='form'>"
 					+"     <div class='counter'>"+chrome.i18n.getMessage('failureLabel')+"&nbsp;<div id='eNumber'>0</div></div>"
 					+"	   <div id='backButton'> < "+chrome.i18n.getMessage('backLabel')+"</div>"
 					+"</div>";
+
+var ingredient_popup_template =   "<div class='popup_div'>"
+								+ "<div class='ingredientTitle'>Listes des ingrédients:</div>"
+								+ "<textarea  id='ingredients'></textarea>"
+								+ "<div class='massFormButton close'>Close</div>"
+								+ "</div>";
 
 var api_url = "/cgi/product_jqm2.pl?";
 var api_autocomplete_url =  "/cgi/suggest.pl?";
@@ -36,7 +42,9 @@ if(isConnected()){
 	if($(".products").length){
 		lang = $("html").attr("lang")
 		addingCheckBox();
+		addingIngredientsFormBtn();
 		addingMassButton();
+		
 		$('#tags').tagsInput(
 		{
 		
@@ -53,6 +61,7 @@ if(isConnected()){
 		}
 		}
 		);
+		
 		
 	}
 	
@@ -82,6 +91,48 @@ function addingCheckBox(){
 
 }
 
+function addingIngredientsFormBtn(){
+$('body').append(ingredient_popup_template);
+$('.popup_div').hide();
+$(".products > li").append("<input class='ingredientsFormBtn' type='button' value='i'/>");
+	$('.ingredientsFormBtn').click(function(){
+		var popup_div = $('.popup_div');
+        var obj = $(this);
+        var offset = obj.offset();
+        var new_top = offset.top + 30;
+        var new_left = offset.left;
+        
+        new_left = new_left - ( popup_div.width() / 2);
+        new_left = new_left + ( obj.width() / 2);
+        
+        popup_div.css('left', new_left + 'px');
+        popup_div.css('top', new_top + 'px');
+        var clickedProduct = $(this).prev('.massUpdateCheckbox').attr('value');
+		console.log("clicked product "+clickedProduct);
+		addIngredientToForm(clickedProduct);
+        popup_div.show();
+	
+	});
+	
+	
+	$('.close').click(function(){
+		$('.popup_div').hide();
+	});
+}
+
+function addIngredientToForm(product){
+	var api_url = "/api/v0/product/"+product+"?fields=ingredients_text_"+lang;
+	var product_lang_info = "ingredients_text_"+lang;
+	$.getJSON( api_url, function( data ){
+		if(data.product[product_lang_info] !=null){
+			console.log("Json :"+data.product[product_lang_info]);
+			$("#ingredients").val(data.product[product_lang_info]);
+			
+		}
+	}
+	);	
+
+}
 function addingMassButton(){
 	$("body").append("<div class='massUpdater'><div class='massButton'>&nbsp;</div><div class='massForms'>"+form_template+"</div></div>");
 	$('.massForms').hide();
@@ -121,7 +172,7 @@ function addingMassButton(){
 		chrome.storage.local.set({"quantity":q});
 	});
 	
-	$(".massFormButton").click(function(){
+	$(".update").click(function(){
 		$("#spinner").show();
 		$("#form").hide();
 		$("#backButton").hide();
