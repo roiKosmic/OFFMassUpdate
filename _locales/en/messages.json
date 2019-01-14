@@ -1,0 +1,109 @@
+{
+	"extName":{
+		"message":"OFF Mass Updater",
+		"description":"Extension name"
+	
+	},
+	"extDescription":{
+		"message":"Mass Updating OFF products",
+		"description":"Extension description"
+	},
+	
+	"extComment":{
+		"message":"MAJ via OFF Mass Updater",		
+		"description":"Valeur ajoutée à l'api lors des mises à jours"
+
+	},
+	
+	"copyLabel":{
+		"message":"Copy",
+		"description": "Copy label"
+	},
+	
+	"fieldToUpdateLabel":{
+		"message":"Field to update",
+		"description":"Field to update label"
+		
+	},
+	
+	"packagingLabel":{
+		"message":"Packaging",
+		"description":"Packaging label"
+	},
+
+	"brandsLabel":{
+		"message":"Brands",
+		"description":"Brands label"
+	},
+	
+	"categoriesLabel":{
+		"message":"Categories",
+		"description":"categories label"
+	},
+	
+	"certificationsLabel":{
+		"message":"Label, certifications, rewards",
+		"description": "certification label"
+	},
+	
+	"originsLabel":{
+		"message":"Ingredients origins",
+		"description": "origins label"
+	},
+	
+	"manufacturingLabel":{
+		"message":"Manufacturing places",
+		"description":"places label"
+	},
+	
+	"purchasingLabel":{
+		"message":"Purchasing places",
+		"description":"city label"
+	},
+	
+	"storesLabel":{
+		"message":"Stores",
+		"description":"Stores label"
+	
+	},
+	
+	"countriesLabel":{
+		"message":"Purchasing countries",
+		"description":"Countries label"
+	
+	},
+	
+	"quantityLabel":{
+		"message":"Quantity",
+		"description":"quantity label"
+	},
+	
+	"editLabel":{
+		"message":"Editing of ",
+		"description":"Edit label"
+	},
+	
+	"editNextLabel":{
+		"message":" products in progress",
+		"description": "editNextLabel"
+		
+	},
+	
+	"successLabel":{
+		"message":"Success",
+		"description": "success label"
+	
+	},
+	
+	"FailureLabel":{
+		"message":"Failures",
+		"description":"failure label"
+	
+	},
+	
+	"backLabel":{
+		"message":"Back",
+		"description": "Back label"
+	}
+	
+}
