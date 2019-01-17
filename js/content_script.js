@@ -130,7 +130,7 @@ $(".products > li").append("<input class='ingredientsFormBtn' type='button' valu
 			$("#ingredients").val(data.ingredients_text_from_image);
 			
 		}else{
-			console.log("No OCR result:"+data);
+			console.log("No OCR result";
 		}
 	}
 	);	
@@ -144,11 +144,12 @@ $(".products > li").append("<input class='ingredientsFormBtn' type='button' valu
 	$('.autoCorrect').click(function(){
 		var text_value = $("#ingredients").val();
 		$.post( spellcheck_url, { text: text_value},function(data){
-			console.log("Spellcheck result : "+data);
+			
 			if(data.corrected !==''){
+				console.log("Spellcheck result : "+data.corrected);
 				$("#ingredients").val(data.corrected);
 			}else{
-				console.log("No correction returned");
+				console.log("No Spellcheck correction returned");
 			}
 		});
 		
