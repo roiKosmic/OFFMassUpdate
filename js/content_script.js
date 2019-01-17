@@ -130,7 +130,7 @@ $(".products > li").append("<input class='ingredientsFormBtn' type='button' valu
 			$("#ingredients").val(data.ingredients_text_from_image);
 			
 		}else{
-			console.log("No OCR result";
+			console.log("No OCR result");
 		}
 	}
 	);	
