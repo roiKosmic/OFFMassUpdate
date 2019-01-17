@@ -33,6 +33,8 @@ var ingredient_popup_template =   "<div class='popup_div'>"
 var api_url = "/cgi/product_jqm2.pl?";
 var api_autocomplete_url =  "/cgi/suggest.pl?";
 var ocr_url = "/cgi/ingredients.pl?process_image=1&ocr_engine=google_cloud_vision";
+var spellcheck_url = "https://robotoff.openfoodfacts.org/api/v1/predict/ingredients/spellcheck";
+
 var sField='packaging';
 var lang='';
 var productToUpdate=0;
@@ -110,7 +112,7 @@ $(".products > li").append("<input class='ingredientsFormBtn' type='button' valu
         popup_div.css('top', new_top + 'px');
         ingredientSelectedProduct = $(this).prev('.massUpdateCheckbox').attr('value');
 		console.log("clicked product "+ingredientSelectedProduct);
-		addIngredientToForm(ingredientSelectedProduct);
+		addIngredientToForm();
         popup_div.show();
 	
 	});
@@ -132,12 +134,30 @@ $(".products > li").append("<input class='ingredientsFormBtn' type='button' valu
 		}
 	}
 	);	
-	});	
+	});
+	
+	$('.reload').click(function(){
+		addIngredientToForm();
+	
+	});
+	
+	$('.autoCorrect').click(function(){
+		var text_value = $("#ingredients").val();
+		$.post( spellcheck_url, { text: text_value},function(data){
+			console.log("Spellcheck result : "+data);
+			if(data.corrected !==''){
+				$("#ingredients").val(data.corrected);
+			}else{
+				console.log("No correction returned");
+			}
+		});
+		
+	});
 
 }
 
-function addIngredientToForm(product){
-	var api_url = "/api/v0/product/"+product+"?fields=ingredients_text_"+lang;
+function addIngredientToForm(){
+	var api_url = "/api/v0/product/"+ingredientSelectedProduct+"?fields=ingredients_text_"+lang;
 	var product_lang_info = "ingredients_text_"+lang;
 	$.getJSON( api_url, function( data ){
 		if(data.product[product_lang_info] !=null){
