@@ -27,15 +27,16 @@ var form_template = "<div id='form'>"
 var ingredient_popup_template =   "<div class='popup_div'>"
 								+ "<div class='ingredientTitle'>Listes des ingrédients:</div>"
 								+ "<textarea  id='ingredients'></textarea>"
-								+ "<div class='massFormButton close'>Close</div>"
+								+ "<div class='btnBar'><div class='massFormButton2 ocr'>OCR</div><div class='massFormButton2 autoCorrect'>Correct.</div><div class='massFormButton2 reload'>Reload</div><div class='massFormButton2 save'>Save</div><div class='massFormButton2 close'>Close</div></div>"
 								+ "</div>";
 
 var api_url = "/cgi/product_jqm2.pl?";
 var api_autocomplete_url =  "/cgi/suggest.pl?";
+var ocr_url = "/cgi/ingredients.pl?process_image=1&ocr_engine=google_cloud_vision";
 var sField='packaging';
 var lang='';
 var productToUpdate=0;
-
+var ingredientSelectedProduct;
 $(document).ready(function(){
 
 if(isConnected()){
@@ -107,17 +108,32 @@ $(".products > li").append("<input class='ingredientsFormBtn' type='button' valu
         
         popup_div.css('left', new_left + 'px');
         popup_div.css('top', new_top + 'px');
-        var clickedProduct = $(this).prev('.massUpdateCheckbox').attr('value');
-		console.log("clicked product "+clickedProduct);
-		addIngredientToForm(clickedProduct);
+        ingredientSelectedProduct = $(this).prev('.massUpdateCheckbox').attr('value');
+		console.log("clicked product "+ingredientSelectedProduct);
+		addIngredientToForm(ingredientSelectedProduct);
         popup_div.show();
 	
 	});
 	
-	
 	$('.close').click(function(){
 		$('.popup_div').hide();
 	});
+	
+	$('.ocr').click(function(e){
+		
+		var url = ocr_url+"&code="+ingredientSelectedProduct+"&id=ingredients_"+lang;
+		$.getJSON( url, function( data ){
+		if(data.ingredients_text_from_image !=null){
+			console.log("Json OCR:"+data.ingredients_text_from_image);
+			$("#ingredients").val(data.ingredients_text_from_image);
+			
+		}else{
+			console.log("No OCR result:"+data);
+		}
+	}
+	);	
+	});	
+
 }
 
 function addIngredientToForm(product){
@@ -125,12 +141,13 @@ function addIngredientToForm(product){
 	var product_lang_info = "ingredients_text_"+lang;
 	$.getJSON( api_url, function( data ){
 		if(data.product[product_lang_info] !=null){
-			console.log("Json :"+data.product[product_lang_info]);
+			console.log("Json Ing OFF :"+data.product[product_lang_info]);
 			$("#ingredients").val(data.product[product_lang_info]);
 			
 		}
 	}
 	);	
+
 
 }
 function addingMassButton(){

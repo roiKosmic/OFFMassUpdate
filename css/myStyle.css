@@ -11,6 +11,27 @@
     
     text-align:left;
 }
+.btnBar{
+	width:100%;
+	text-align: center;
+
+}
+
+.massFormButton2{
+background-color: red;
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  color: white;
+  margin: 4px 2px;
+  display:inline-block;
+  width:65px;
+  cursor:pointer;
+  border-radius: 20px;
+}
 
 .massButton {
  
