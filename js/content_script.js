@@ -1,5 +1,5 @@
 var form_template = "<div id='form'>"
-					+"<div class='upBar'><input type='checkbox' id='selectAll'>&nbsp;Select All</input><div class='copyButton'>"+chrome.i18n.getMessage('copyLabel')+"</div></div>"
+					+"<div class='upBar'><input type='checkbox' id='selectAll' /><label for='selectAll'>&nbsp;Select All</label><div class='copyButton'>"+chrome.i18n.getMessage('copyLabel')+"</div></div>"
 					+"<div>"+chrome.i18n.getMessage('fieldToUpdateLabel')+"</div>" 
 				   +"<select id='champ'>"
 				   +"				<option value='add_packaging' field='packaging'>"+chrome.i18n.getMessage('packagingLabel')+"</option>"
