@@ -26,7 +26,7 @@ var form_template = "<div id='form'>"
 
 var ingredient_popup_template =   "<div class='popup_div'>"
 								+ "<div class='ingredientTitle'>Listes des ingrédients:</div>"
-								+ "<textarea  id='ingredients'></textarea>"
+								+ "<textarea  id='ingredients_massedit'></textarea>"
 								+ "<div class='massFormButton close'>Close</div>"
 								+ "</div>";
 

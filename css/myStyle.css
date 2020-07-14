@@ -63,7 +63,7 @@ background-color: red;
   cursor:pointer;
   border-radius: 20px;
 }
-#ingredients{
+#ingredients_massedit{
 	width: 300px;
 	min-height: 130px;
 	text-align: justify;
