@@ -39,7 +39,7 @@ var productToUpdate=0;
 $(document).ready(function(){
 
 if(isConnected()){
-	if($(".products").length){
+	if($(".products, .search_results").length){
 		lang = $("html").attr("lang")
 		addingCheckBox();
 		addingIngredientsFormBtn();
@@ -75,7 +75,7 @@ function isConnected(){
 }
 function addingCheckBox(){
 	console.log("Adding check box");
-	$(".products > li").append("<input class='massUpdateCheckbox' type='checkbox' value=''/>");
+	$(".products > li, .search_results > li").append("<input class='massUpdateCheckbox' type='checkbox' value=''/>");
 	
 	$('.massUpdateCheckbox').each(function(){
 		var myAnchor= $(this).parent().find("a");
