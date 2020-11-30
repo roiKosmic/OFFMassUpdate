@@ -75,7 +75,7 @@ function isConnected(){
 }
 function addingCheckBox(){
 	console.log("Adding check box");
-	$(".products > li, .search_results > li").append("<input class='massUpdateCheckbox' type='checkbox' value=''/>");
+	$(".products > li, #products_all > ul > li").append("<input class='massUpdateCheckbox' type='checkbox' value=''/>");
 	
 	$('.massUpdateCheckbox').each(function(){
 		var myAnchor= $(this).parent().find("a");
