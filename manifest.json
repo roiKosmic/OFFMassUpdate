@@ -10,13 +10,14 @@
     "permissions": [
           "*://*.openfoodfacts.net/*",
 		   "*://*.openfoodfacts.org/*",
+		   "*://*.openfoodfacts.dev/*",
 		  "storage",
 		  "clipboardWrite"
     ],
 
     "content_scripts": [
         {
-            "matches": ["https://*.openfoodfacts.net/*","https://*.openfoodfacts.org/*"],
+            "matches": ["https://*.openfoodfacts.net/*","https://*.openfoodfacts.org/*","https://*.openfoodfacts.dev/*"],
 			"css": ["/css/myStyle.css","/css/external/jquery.tagsinput.css"],
 			"run_at": "document_end",
             "js": [
