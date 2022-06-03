@@ -19,7 +19,7 @@
 
     "content_scripts": [
         {
-      "matches": ["https://*.openfoodfacts.net/*","https://*.openfoodfacts.org/*","https://*.openpetfoodfacts.org/*","https://*.openproductsfacts.org/*","https://*.openbeautyfacts.org/*",],
+      "matches": ["https://*.openfoodfacts.net/*","https://*.openfoodfacts.org/*","https://*.openpetfoodfacts.org/*","https://*.openproductsfacts.org/*","https://*.openbeautyfacts.org/*"],
 			"css": ["/css/myStyle.css","/css/external/jquery.tagsinput.css"],
 			"run_at": "document_end",
             "js": [
